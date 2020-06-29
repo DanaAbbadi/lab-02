@@ -1,0 +1,16 @@
+h1{
+    text-align: center;
+    /* margin-top: 4%; */
+    font-size: 40px;
+    font-weight: 500;
+    position: absolute;
+    left: 40%;
+    top: 26%;
+}
+
+header{
+    background-color: #5893E0;
+    height: 100px;
+    position: relative;
+
+}
