@@ -14,21 +14,28 @@ function Imgs(imgurl, title, desc, keyword, horns) {
 
 Imgs.prototype.render = function () {
 
-    let photo = $('.photo-template').clone();
-    photo.attr('class',this.keyword);
+    // let photo = $('.photo-template').clone();
+    // photo.attr('class', this.keyword);
 
-    photo.find('h2').text(this.title);
-    photo.find('img').attr('src', this.imgurl);
-    photo.find('img').attr('alt', this.title);
-    photo.find('p').text(this.desc);
-    $('.cont').append(photo);
-    photo.removeClass('photo-template');
+    // photo.find('h2').text(this.title);
+    // photo.find('img').attr('src', this.imgurl);
+    // photo.find('img').attr('alt', this.title);
+    // photo.find('p').text(this.desc);
+    // $('.cont').append(photo);
+    // photo.removeClass('photo-template');
+
+    let musTemplate = $('#Imgs-template').html();
+    let newObj = Mustache.render(musTemplate,this);
+    $('.cont').append(newObj);
+
+  
 
 }
 
 function creatOption(select) {
     let noDuplicates = [];
     noDuplicates.push(select[0].keyword);
+    // const unique = Array.from(new Set(selectors));
 
     select.forEach(item => {
         // noDuplicates.push(item.keyword);
@@ -60,6 +67,16 @@ $.ajax('./data/page-1.json', 'ajaxSettings').then(data => {
 
 )
 
+$.ajax('./data/page-2.json', 'ajaxSettings').then(data => {
+    data.forEach(item => {
+        let newImg = new Imgs(item.image_url, item.title, item.description, item.keyword, item.horns);
+        newImg.render();
+    })
+    // creatOption(Imgs.all);
+}
+
+)
+
 
 // Show the selected option 
 
@@ -68,14 +85,14 @@ $('select').change(function (event) {
 
     let value = $("select option:selected").html();
     console.log(value);
-    
-    Imgs.all.forEach(item =>{
-        if (item.keyword !== value && value !=='all' ){
-            $('.'+ item.keyword).hide();
+
+    Imgs.all.forEach(item => {
+        if (item.keyword !== value && value !== 'all') {
+            $('.' + item.keyword).hide();
         }
 
-        if(value=== 'all' || item.keyword === value){
-            $('.'+ item.keyword).show();
+        if (value === 'all' || item.keyword === value) {
+            $('.' + item.keyword).show();
 
 
         }
