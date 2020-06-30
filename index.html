@@ -7,9 +7,25 @@
   <title>The Gallery of Horns</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/layout.css"> 
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/modules.css">
+   <link rel="stylesheet" href="css/modules.css">
+  <script id='Imgs-template' type="text/x-tmpl-mustache">
+   
+    <section class="{{keyword}}">
+      <h2>{{title}}</h2>
+        <img src= {{imgurl}} alt ="{{title}}">
+        <p>{{desc}}</p>
+    </section>
+
+</script>
+
+<script id='select-template' type="text/x-tmpl-mustache">
+   
+  <option class='opt' value="{{keyword}}">{{keyword}}</option>
+
+
+</script>
 
 </head>
 
@@ -24,20 +40,30 @@
       <select class='select'>
         <option class='opt' value="all">all</option>
       </select>
+      <select class='sort'>
+        <option class='title' value="title">title</option>
+        <option class='horn'  value="horn">horn</option>
+      </select>
     </div>
-
+    <button id="btn1">Page 1</button>
+    <button id="btn2">Page 2</button>
+ <form id="searching">
+    <label for="toSearch">Search by keyword,title...</label>
+    <input type="search" id="search" name="search">
+    <input type="submit" value='search' id="searching11">
+  </form>
     <div class="cont">
 
-      <section class="photo-template">
+      <!-- <section class="photo-template">
         <h2></h2>
         <img src="" alt="">
         <p></p>
-      </section>
+      </section> -->
 
-    </div>
+    </div> 
 
   </main>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.0.1/mustache.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="js/app.js"></script>
 

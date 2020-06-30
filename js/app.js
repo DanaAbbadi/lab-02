@@ -1,5 +1,11 @@
 'use strict'
 Imgs.all = [];
+Imgs.title = [];
+Imgs.horn = [];
+let path1 = './data/page-1.json';
+let path2 = './data/page-2.json';
+
+ajaxFunction(path1);
 
 // creat the constructor, methods and helper fxns 
 function Imgs(imgurl, title, desc, keyword, horns) {
@@ -10,87 +16,137 @@ function Imgs(imgurl, title, desc, keyword, horns) {
     this.keyword = keyword;
     this.horns = horns;
     Imgs.all.push(this);
+    Imgs.title.push(title);
+    Imgs.horn.push(horns);
 }
-
 Imgs.prototype.render = function () {
-
-    let photo = $('.photo-template').clone();
-    photo.attr('class',this.keyword);
-
-    photo.find('h2').text(this.title);
-    photo.find('img').attr('src', this.imgurl);
-    photo.find('img').attr('alt', this.title);
-    photo.find('p').text(this.desc);
-    $('.cont').append(photo);
-    photo.removeClass('photo-template');
-
+    let musTemplate = $('#Imgs-template').html();
+    let newObj = Mustache.render(musTemplate, this);
+    $('.cont').append(newObj);
 }
-
 function creatOption(select) {
-    let noDuplicates = [];
-    noDuplicates.push(select[0].keyword);
 
+    let noDuplicates = [];
     select.forEach(item => {
-        // noDuplicates.push(item.keyword);
         if (!noDuplicates.includes(item.keyword)) {
-            let opt = $('.opt').clone();
-            opt.text(item.keyword);
-            $('.select').append(opt);
-            opt.removeClass('opt');
+            let selTemplate = $('#select-template').html();
+            let newObj1 = Mustache.render(selTemplate, item);
+            $('.select').append(newObj1);
             noDuplicates.push(item.keyword);
         }
     })
-    console.log(noDuplicates);
-
 }
-
 // Get the data from .JSON file by using ajax
 const ajaxSettings = {
     method: 'get',
     datatype: 'json'
 }
-
-$.ajax('./data/page-1.json', 'ajaxSettings').then(data => {
-    data.forEach(item => {
-        let newImg = new Imgs(item.image_url, item.title, item.description, item.keyword, item.horns);
-        newImg.render();
+function ajaxFunction(path) {
+    $.ajax(path, 'ajaxSettings').then(data => {
+        data.forEach(item => {
+            let newImg = new Imgs(item.image_url, item.title, item.description, item.keyword, item.horns);
+            newImg.render();
+        })
+        $('.select').text("");
+        $('.select').append("<option class='opt' value='all' >all</option>");
+        creatOption(Imgs.all);
+        err();
     })
-    creatOption(Imgs.all);
+}
+// Show the selected option 
+$('.select').change(function (event) {
+    let value = $(".select option:selected").html();
+    Imgs.all.forEach(item => {
+        if (item.keyword !== value && value !== 'all') {
+            $('.' + item.keyword).hide();
+        }
+        if (value === 'all' || item.keyword === value) {
+            $('.' + item.keyword).show();
+        }
+    })
+});
+$('#btn2').click(() => {
+    Imgs.all = [];
+    $('.cont').text('');
+    ajaxFunction(path2);
+})
+$('#btn1').click(() => {
+    Imgs.all = [];
+    $('.cont').text('');
+    ajaxFunction(path1);
+})
+$('.sort').change(function (event) {
+    let value = $(".sort option:selected").html();
+
+    if (value == 'title') {
+        var forTitle = 'title';
+        sorting(Imgs.all, forTitle);
+        $('.cont').text('');
+        Imgs.all.forEach(item => {
+            item.render();
+        })
+    }
+    if (value == 'horn') {
+        var forHorn = 'horns';
+        sorting(Imgs.all, forHorn);
+        $('.cont').text('');
+        Imgs.all.forEach(item => {
+            item.render();
+        })
+
+    }
+});
+function sorting(arr, x) {
+    if (x === 'title') {
+        arr.sort((a, b) => {
+            if (a.title > b.title) return 1;
+            // return a>b;
+            if (a.title < b.title) return -1;
+            if (a.title == b.title) return 0;
+        })
+    }
+    else {
+        arr.sort((a, b) => {
+            if (a.horns > b.horns) return 1;
+            // return a>b;
+            if (a.horns < b.horns) return -1;
+            if (a.horns == b.horns) return 0;
+        })
+    }
 }
 
-)
+function err() {
+    $('section').on('click', function (event) {
+        let selected = this.className;
+        $('.cont').children().hide();
+        $(`.${selected}`).attr('id', 'showAlone');
+        $(this).show();
+    })
+}
+
+$('#searching').submit(function () {
+    console.log('hi');
+    event.preventDefault();
+    let finding = $("input").first().val();
+    Imgs.all.forEach(item => {
+        if (item.keyword === finding || item.title === finding) {
+            $('.cont').children().hide();
+            switch (finding) {
+                case item.keyword:
+                    $(`.${item.keyword}`).show();
+                    break;
+                case item.title:
+                    $(`.${item.keyword}`).show();
+                    break;
+                default:
+                    break;
 
 
-// Show the selected option 
+            }
 
-// $('.select').select(function(){
-$('select').change(function (event) {
 
-    let value = $("select option:selected").html();
-    console.log(value);
-    
-    Imgs.all.forEach(item =>{
-        if (item.keyword !== value && value !=='all' ){
-            $('.'+ item.keyword).hide();
         }
-
-        if(value=== 'all' || item.keyword === value){
-            $('.'+ item.keyword).show();
-
-
-        }
-
     })
 
-});
 
-
-
-// $( "#myselect option:selected" ).text();
-
-
-
-
-
-
-
+})
