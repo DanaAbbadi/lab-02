@@ -79,16 +79,16 @@ $('.sort').change(function (event) {
     let value = $(".sort option:selected").html();
 
     if (value == 'title') {
-        var xx = 'title';
-        sorting(Imgs.all, xx);
+        var forTitle = 'title';
+        sorting(Imgs.all, forTitle);
         $('.cont').text('');
         Imgs.all.forEach(item => {
             item.render();
         })
     }
     if (value == 'horn') {
-        var xxr = 'horns';
-        sorting(Imgs.all, xxr);
+        var forHorn = 'horns';
+        sorting(Imgs.all, forHorn);
         $('.cont').text('');
         Imgs.all.forEach(item => {
             item.render();
