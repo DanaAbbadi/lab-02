@@ -7,17 +7,24 @@
   <title>The Gallery of Horns</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/reset.css">
-  <!-- <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/layout.css"> 
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/modules.css"> -->
+   <link rel="stylesheet" href="css/modules.css">
   <script id='Imgs-template' type="text/x-tmpl-mustache">
    
-    <section class="photo-template">
+    <section class="{{keyword}}">
       <h2>{{title}}</h2>
         <img src= {{imgurl}} alt ="{{title}}">
         
         <p>{{desc}}</p>
     </section>
+
+</script>
+
+<script id='select-template' type="text/x-tmpl-mustache">
+   
+  <option class='opt' value="{{keyword}}">{{keyword}}</option>
+
 
 </script>
 
@@ -34,7 +41,13 @@
       <select class='select'>
         <option class='opt' value="all">all</option>
       </select>
+      <select class='sort'>
+        <option class='title' value="title">title</option>
+        <option class='horn'  value="horn">horn</option>
+      </select>
     </div>
+    <button id="btn1">Page 1</button>
+    <button id="btn2">Page 2</button>
  
     <div class="cont">
 

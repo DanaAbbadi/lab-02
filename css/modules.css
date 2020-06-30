@@ -3,7 +3,17 @@
     height: 50px;
 }
 
-select{
+.select{
+    position: absolute;
+    left: 40%;
+    margin-top: 3%;
+    background-color: DodgerBlue;
+    border: 6px solid transparent;
+    height: 48px;
+    width: 208px;
+    font-size: 23px;
+}
+.sort{
     position: absolute;
     left: 44%;
     margin-top: 3%;
@@ -12,21 +22,27 @@ select{
     height: 48px;
     width: 208px;
     font-size: 23px;
-}
+    margin-left: 13%;
 
+}
 .cont{
     margin-top: 5%;
+    display: flex;
+    flex-wrap: wrap;
 
 }
 .cont section{
     border: 5px solid black;
     padding: 10px;
-    height: 200px;
-    width: 12%;
-    float: left;
-    margin-left: 5%;
+    height: 297px;
+    width: 17%;
+    line-height: 1.7;
+    /* float: left; */
+    margin-left: 7%;
     margin-bottom: 1%;
     background-color: rgba(255, 202, 242,.6);
+    overflow: hidden;
+
 }
 
 .cont section img{
