@@ -55,3 +55,18 @@
 .photo-template{
     display: none;
 }
+
+
+#showAlone img{
+    height: 100%;
+    width: 200px;
+    margin: auto;
+}
+
+#showAlone{
+    height: 100%;
+    width: 21%;
+    margin: auto;
+    
+
+}
