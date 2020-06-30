@@ -127,12 +127,11 @@ function err() {
 $('#searching').submit(function () {
     console.log('hi');
     event.preventDefault();
-    let fining = $("input").first().val();
+    let finding = $("input").first().val();
     Imgs.all.forEach(item => {
-        if (item.keyword === fining || item.title === fining) {
+        if (item.keyword === finding || item.title === finding) {
             $('.cont').children().hide();
-
-            switch (fining) {
+            switch (finding) {
                 case item.keyword:
                     $(`.${item.keyword}`).show();
                     break;
